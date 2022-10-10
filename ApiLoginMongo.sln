@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiLoginMongo", "ApiLoginMongo\ApiLoginMongo.csproj", "{E10449F8-A715-438D-BC46-C0D407DB8D43}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{501FE887-A449-4075-89E8-13B7BCF3817B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E10449F8-A715-438D-BC46-C0D407DB8D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E10449F8-A715-438D-BC46-C0D407DB8D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E10449F8-A715-438D-BC46-C0D407DB8D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E10449F8-A715-438D-BC46-C0D407DB8D43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{501FE887-A449-4075-89E8-13B7BCF3817B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{501FE887-A449-4075-89E8-13B7BCF3817B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{501FE887-A449-4075-89E8-13B7BCF3817B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{501FE887-A449-4075-89E8-13B7BCF3817B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {698E24E7-2A10-4EE8-A4CC-001C87C14DC7}
+	EndGlobalSection
+EndGlobal

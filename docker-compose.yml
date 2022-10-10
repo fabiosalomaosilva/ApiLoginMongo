@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  apiloginmongo:
+    image: ${DOCKER_REGISTRY-}apiloginmongo
+    build:
+      context: .
+      dockerfile: ApiLoginMongo/Dockerfile
+    
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: teste123
+    ports:
+      - "27017:27017"
+    container_name: mongodb
+    volumes: 
+      - /home/data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: teste123
+      ME_CONFIG_MONGODB_URL: mongodb://root:teste123@mongo:27017/
