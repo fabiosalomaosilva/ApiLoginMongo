@@ -15,5 +15,8 @@ namespace ApiLoginMongo.Entities
         public bool EmailValidated { get; set; }
         public bool Active { get; set; }
         public string CellphoneNumber { get; set; }
+        public string RoleId { get; set; }
+        public string Role { get; set; }
+
     }
 }

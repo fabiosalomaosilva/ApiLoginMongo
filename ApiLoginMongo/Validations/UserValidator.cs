@@ -15,4 +15,13 @@ namespace ApiLoginMongo.Validations
             RuleFor(x => x.ConfirmPassword).Equal(user => user.Password).WithMessage("A Confirmação é diferente da senha.");
         }
     }
+
+    public class LoginDtoValidator : AbstractValidator<LoginDto>
+    {
+        public LoginDtoValidator()
+        {
+            RuleFor(x => x.Email).NotNull().WithMessage("O campo de E-mail é obrigatório.").EmailAddress().WithMessage("O E-mail informado é inválido.");
+            RuleFor(x => x.Password).NotNull().WithMessage("A Senha é obrigatória.");
+        }
+    }
 }

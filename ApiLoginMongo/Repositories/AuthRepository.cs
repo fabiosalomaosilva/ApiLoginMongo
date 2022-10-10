@@ -32,23 +32,34 @@ namespace ApiLoginMongo.Repositories
 
             if (user == null)
             {
-                return new StatusLogin { User = null, StatusLoginResult = StatusLoginResult.UserNotFound };
+                return new StatusLogin { ResponseUser = null, StatusLoginResult = StatusLoginResult.UserNotFound };
             }
             if (!user.EmailValidated)
             {
-                return new StatusLogin { User = null, StatusLoginResult = StatusLoginResult.EmailNoValidated };
+                return new StatusLogin { ResponseUser = null, StatusLoginResult = StatusLoginResult.EmailNoValidated };
             }
             if (!user.Active)
             {
-                return new StatusLogin { User = null, StatusLoginResult = StatusLoginResult.UserInactive };
+                return new StatusLogin { ResponseUser = null, StatusLoginResult = StatusLoginResult.UserInactive };
             }
-
-            if (user != null && user.Password == login.Password.ToEncript() && user.EmailValidated)
+            var password = login.Password.ToEncript();
+            if (user != null && user.Password == password && user.EmailValidated)
             {
-                return new StatusLogin { User = user, StatusLoginResult = StatusLoginResult.Success };
+                return new StatusLogin
+                {
+                    ResponseUser = new ResponseUserDto
+                    {
+                        Email = login.Email,
+                        Role = user.Role,
+                        Name = user.Name,
+                        CellphoneNumber = user.CellphoneNumber,
+                        RoleId = user.RoleId,
+                    },
+                    StatusLoginResult = StatusLoginResult.Success
+                };
             }
 
-            return new StatusLogin { User = null, StatusLoginResult = StatusLoginResult.ErrorLogin };
+            return new StatusLogin { ResponseUser = null, StatusLoginResult = StatusLoginResult.ErrorLogin };
         }
 
         public async Task<User> Register(RegisterDto register)

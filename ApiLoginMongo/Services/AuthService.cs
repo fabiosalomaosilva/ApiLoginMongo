@@ -9,10 +9,12 @@ namespace ApiLoginMongo.Services
     public class AuthService : IAuthService
     {
         private readonly IAuthRepository _authRepository;
+        private readonly ITokenService _tokenService;
 
-        public AuthService(IAuthRepository authRepository)
+        public AuthService(IAuthRepository authRepository, ITokenService tokenService)
         {
             _authRepository = authRepository;
+            _tokenService = tokenService;
         }
 
         public async Task<User> Register(RegisterDto register)
@@ -22,7 +24,12 @@ namespace ApiLoginMongo.Services
 
         public async Task<StatusLogin> Login(LoginDto login)
         {
-            return await _authRepository.Login(login);
+            var responseUser = await _authRepository.Login(login);
+            if (responseUser.StatusLoginResult == StatusLoginResult.Success)
+            {
+                responseUser.ResponseUser.Token = await _tokenService.GenerateTokenAsync(responseUser.ResponseUser);
+            }
+            return responseUser;
         }
 
         public async Task<bool> ChangePassword(ChangePasswordDto changePasswordDto)
