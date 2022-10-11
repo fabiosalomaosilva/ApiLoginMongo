@@ -1,8 +1,11 @@
 using ApiLoginMongo.Data;
+using ApiLoginMongo.Dtos;
 using ApiLoginMongo.Repositories;
 using ApiLoginMongo.Repositories.Interfaces;
 using ApiLoginMongo.Services;
 using ApiLoginMongo.Services.Interfaces;
+using ApiLoginMongo.Validations;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -23,6 +26,9 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<IValidator<RegisterDto>, UserValidator>();
+builder.Services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
+
 
 var apiKey = builder.Configuration.GetSection("ApiKey").Value;
 

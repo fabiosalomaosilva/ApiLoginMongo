@@ -62,10 +62,13 @@ namespace ApiLoginMongo.Repositories
             return new StatusLogin { ResponseUser = null, StatusLoginResult = StatusLoginResult.ErrorLogin };
         }
 
-        public async Task<User> Register(RegisterDto register)
+        public async Task<ResponseRegisterDto> Register(RegisterDto register)
         {
             try
             {
+                context.Indexes.CreateOne(
+                  new CreateIndexModel<User>(Builders<User>.IndexKeys.Descending(model => model.Email),
+                  new CreateIndexOptions { Unique = true }));
                 var user = new User
                 {
                     Active = true,
@@ -73,14 +76,43 @@ namespace ApiLoginMongo.Repositories
                     EmailValidated = true,
                     Password = register.Password.ToEncript(),
                     Name = register.Name,
-                    CellphoneNumber = register.CellphoneNumber
+                    CellphoneNumber = register.CellphoneNumber,
+                    Role = RoleTypes.Admin,
+                    RoleId = "1",
+                    PhotoUrl = ""
                 };
                 await context.InsertOneAsync(user);
-                return user;
+                var responseUser = new ResponseRegisterModelDto
+                {
+                    Email = register.Email,
+                    Name = register.Name,
+                    CellphoneNumber = register.CellphoneNumber,
+                    Role = RoleTypes.Admin
+                };
+                return new ResponseRegisterDto
+                {
+                    Model = responseUser,
+                    Message = "Cadastro realizado com sucesso.",
+                    ResponseRegisterStatus = ResponseRegisterStatus.Success
+                };
             }
-            catch (Exception)
+            catch (MongoWriteException ex)
             {
-                throw new Exception();
+                return new ResponseRegisterDto
+                {
+                    Model = null,
+                    Message = "O email informado já está cadastrado na base de dados. Por favor verifique os dados.",
+                    ResponseRegisterStatus = ResponseRegisterStatus.EmailDuplicado
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseRegisterDto
+                {
+                    Model = null,
+                    Message = ex.Message,
+                    ResponseRegisterStatus = ResponseRegisterStatus.ErroServidor
+                };
             }
         }
 

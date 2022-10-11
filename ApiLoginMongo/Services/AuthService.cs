@@ -1,6 +1,5 @@
 ﻿using ApiLoginMongo.Data;
 using ApiLoginMongo.Dtos;
-using ApiLoginMongo.Entities;
 using ApiLoginMongo.Repositories.Interfaces;
 using ApiLoginMongo.Services.Interfaces;
 
@@ -17,9 +16,17 @@ namespace ApiLoginMongo.Services
             _tokenService = tokenService;
         }
 
-        public async Task<User> Register(RegisterDto register)
+        public async Task<ResponseRegisterDto> Register(RegisterDto register)
         {
-            return await _authRepository.Register(register);
+            try
+            {
+                return await _authRepository.Register(register);
+
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<StatusLogin> Login(LoginDto login)
